@@ -1,0 +1,9 @@
+.env*
+node_modules
+*public*
+.DS_Store
+*log*
+private.key
+.vscode
+*.bak
+neru.yml
