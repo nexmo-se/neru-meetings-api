@@ -9,7 +9,7 @@ It shows you can do the following through a simple API call:
 
 [Here](https://api-us.vonage.com/v1/neru/i/neru-b617e2b2-neru-test-app-dev/public/create) is a demo that is hosted in NeRu.
 
-![create a meeting room](screenshots/Screenshot-create-a-meeting-room.png?raw=true | width=500)
+![create a meeting room](screenshots/Screenshot-create-a-meeting-room.png?raw=true "create a meeting room")
 
 ### Installation
 This app require, node.js and react.
