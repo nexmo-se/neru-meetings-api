@@ -1,10 +1,10 @@
 ## Neru App for Meetings API setup
 
-A Simple Demo of using the Vonage Meetings API([overview](https://developer.vonage.com/meetings/overview), [API Reference](https://developer.vonage.com/meetings/api-reference)). 
+A Simple Demo of using the Vonage Meetings API( [Overview](https://developer.vonage.com/meetings/overview), [API Reference](https://developer.vonage.com/meetings/api-reference) ). 
 
 You can deploy it in [NeRu](https://vonage-neru.herokuapp.com/neru/overview) or other cloud providers.
 
-It shows you can do the following through a simple API call:
+Features:
 - Create/Delete/Fetch-info-of a Meetings Room
 - List all Available Meetings Rooms( Active Room )
 - Send invitations via SMS API
@@ -15,7 +15,7 @@ It shows you can do the following through a simple API call:
 ![create a meeting room](screenshots/Screenshot-create-a-meeting-room.png?raw=true "create a meeting room")
 
 ### Installation
-This app require, node.js and react.
+This app requires node.js and react.
 #### Install dependencies
 - Backend, when deployed in NeRu, 
    - follow through all steps in [this NeRU toturial](https://vonage-neru.herokuapp.com/neru/tutorials/neru-get-started), and install all mentioned prerequisites
