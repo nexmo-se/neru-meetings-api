@@ -1,5 +1,7 @@
 import config from './lib/config.js'; config();
+const NERU_CONFIGURATIONS = JSON.parse(process.env['NERU_CONFIGURATIONS']);
 import { neru, session, messaging, state, meetings } from './lib/neruWrapper.js';
+import { Message as MyMessage} from './lib/message.js'; 
 import path from 'path';
 import {fileURLToPath} from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -86,8 +88,10 @@ router.get('/meetingsCallbacks', async (req, res, next) => {
 router.post('/sendsms', async (req, res, next) => {
     try {
         const payload = req.body;
+        if (payload.to == '') throw new Error ('Wrong To number')
+        if (payload.text == '') throw new Error ('Empty text') 
         const to = { type: "sms", number: payload.to };
-        const from = { type: "sms", number: "12013451513" };
+        const from = { type: "sms", number: NERU_CONFIGURATIONS.concat.number };
         await messaging.listenEvents(from, to, "onMessagesEvent").execute();
         var data = await messaging.sendText(from, to, payload.text).execute();
         return res.json(data);
@@ -119,4 +123,17 @@ router.get('/messagesEvents', async (req, res, next) => {
     }
 });
 
+router.get('/ni', async (req, res, next) => {
+    const number = req.query.number;
+    try {
+        var messaging = new MyMessage()
+        var data = await messaging.checkNi(number).execute();
+        if (data && data.national_format_number) data = data.national_format_number
+        else data = number;
+        return res.json(data);
+    } catch (error) {
+        console.error(error)
+        return res.json(number);
+    }
+});
 export { router };
