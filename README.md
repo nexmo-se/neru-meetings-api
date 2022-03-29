@@ -38,7 +38,7 @@ For production environments...
 - NeRu
 ```sh
 cd ./frontend && npm run build
-cp -f ./frontend/build/* ./backend/public
+cp -r ./frontend/build/* ./backend/public
 neru deploy
 ```
 - For others:
