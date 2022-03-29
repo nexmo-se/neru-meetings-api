@@ -1,5 +1,8 @@
 ## Neru App for Meetings API setup
-A Simple Demo of using the Vonage Meetings API. You can deploy it in NeRu or other cloud providers.
+
+A Simple Demo of using the Vonage Meetings API([overview](https://developer.vonage.com/meetings/overview), [API Reference](https://developer.vonage.com/meetings/api-reference)). 
+
+You can deploy it in [NeRu](https://vonage-neru.herokuapp.com/neru/overview) or other cloud providers.
 
 It shows you can do the following through a simple API call:
 - Create/Delete/Fetch-info-of a Meetings Room
