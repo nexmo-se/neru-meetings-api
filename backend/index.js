@@ -1,11 +1,13 @@
-import config from './lib/config.js'; config();
-const NERU_CONFIGURATIONS = JSON.parse(process.env['NERU_CONFIGURATIONS']);
+import config from './lib/config.js'; 
 import { neru, session, messaging, state, meetings } from './lib/neruWrapper.js';
 import { Message as MyMessage} from './lib/message.js'; 
 import path from 'path';
 import {fileURLToPath} from 'url';
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import st from 'serve-static';
+
+config();
+const NERU_CONFIGURATIONS = JSON.parse(process.env['NERU_CONFIGURATIONS']);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // =========================================
 const router = neru.Router();
