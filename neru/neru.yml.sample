@@ -1,0 +1,22 @@
+project:
+    name: 
+instance:
+    name: 
+    runtime: 
+    region: 
+    application-id: 
+    configurations:
+        contact:
+            number: ""
+            type: "phone"
+        meetings_api:
+            api_application_id: ""
+            api_private_key: "./private.key"
+            url_sms_callback: ""
+        api_account:
+            key: ""
+            secret: ""
+        section1:
+            key1: this is an example
+        section2:
+            key2: 42

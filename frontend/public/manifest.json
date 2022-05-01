@@ -1,0 +1,8 @@
+{
+  "short_name": "NeRu & Meeting API",
+  "name": "Sample - NeRu & Meeting API",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
