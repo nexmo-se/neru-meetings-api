@@ -2,6 +2,7 @@ import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 import jwt from 'jsonwebtoken';
 import { got } from 'got';
+
 // -- OR axios // import axios from 'axios';
 
 var HttpRequest = (function () {
@@ -22,6 +23,7 @@ var HttpRequest = (function () {
         var res;
         try {
             console.log(this.url, this.payload, this.headers);
+
             switch(this.method) {
                 case 'DELETE':
                     res = await this.merged.delete(this.url);
@@ -32,8 +34,12 @@ var HttpRequest = (function () {
                 case 'POST':
                     res = await this.merged.post(this.url, this.payload);
                     break 
+                case 'PATCH':
+                    res = await this.merged.patch(this.url, this.payload);
+                    break 
             }
             console.log(res.body, res.statusCode);
+
             if (res.body && typeof res.body === 'string') res.body = JSON.parse(res.body);
             if (res.body && res.body.error) {
                 throw new Error(res.body.error || 'Something went wrong');

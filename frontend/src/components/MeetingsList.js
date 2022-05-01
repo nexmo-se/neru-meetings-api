@@ -1,13 +1,16 @@
-import React, { useRef }  from "react";
+
+import React, { useState, forwardRef, useRef, useImperativeHandle }  from "react";
 import {
   Button,
   ListGroup,
-  Spinner
+  Spinner,
+  Form,
+  Toast
 } from 'react-bootstrap';
-
 import Http  from './Http';
 import SmsFrom from './SmsFrom';
 import AlertDismissible from './AlertDismissible';
+import ToggleDialInNumbers from './ToggleDialInNumbers';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -20,15 +23,28 @@ const API_URL = process.env.REACT_APP_API_URL;
     //
     this.state = {
       showSpinner: false,
+      dialInNumbers: [],
       list:[]
     }
+  }
+  // - Get dial in numbers
+  listDialInNumbers = (e) => {
+    Http.get(API_URL + '/meetings/dial-in-numbers')
+      .then(data => {
+        console.log("listDialInNumbers", data, typeof data);
+        this.setState({
+          dialInNumbers: data
+        });
+      }).catch(error => {
+        console.error(error)
+      });
   }
   // - Get all available rooms
   listMeetingRooms = (e) => {
     this.setState({
       showSpinner: true,
     });
-    Http.get(API_URL + '/meetingsRoom')
+    Http.get(API_URL + '/meetings/rooms')
       .then(data => {
         console.log("listMeetingRooms", data, typeof data);
         this.setState({
@@ -43,6 +59,7 @@ const API_URL = process.env.REACT_APP_API_URL;
       });
   }
   componentDidMount() {
+    this.listDialInNumbers();
     this.listMeetingRooms();
     //this.timer = setInterval(() => this.listMeetingRooms(), 5000);
   }
@@ -55,7 +72,7 @@ const API_URL = process.env.REACT_APP_API_URL;
     this.setState({
       showSpinner: true,
     });
-    Http.delete(API_URL + '/meetingsRoom?id=' + e.target.value)
+    Http.delete(API_URL + `/meetings/rooms/${e.target.value}/`)
       .then(data => {
         console.log("delMeetingRoom", data, typeof data);
         this.setState({
@@ -87,7 +104,7 @@ const API_URL = process.env.REACT_APP_API_URL;
         <Button variant="link" size="sm" 
             onClick={(e) => {smsFormRef.current.hidden = !smsFormRef.current.hidden;}}
         >Send invites via sms</Button>
-        <div size="sm" ref={smsFormRef} hidden={true} className="bg-light p-3">
+        <div size="sm" ref={smsFormRef} hidden={true} className="bg-light border p-3">
           <SmsFrom text={"Join my video call on the following link: " + props.data._links.guest_url.href}/> 
         </div>
       </>);
@@ -97,6 +114,7 @@ const API_URL = process.env.REACT_APP_API_URL;
       <h3>Available Rooms</h3>
       <p hidden={ this.state.showSpinner } >Total: {this.state.list.length || 0} </p>
       <Spinner animation="border" role="status" hidden={ !this.state.showSpinner } />
+      
       <ListGroup>
         {
           this.state.list.map((item, index) => {
@@ -104,10 +122,16 @@ const API_URL = process.env.REACT_APP_API_URL;
               <ListGroup.Item className="list" key={index}> 
                 {item.display_name}
                 <br />
+                {" "}
+                <ToggleDialInNumbers meetings={item} key="din-{index}" dialInNumbers={this.state.dialInNumbers}/>
                 <Button variant="link" size="sm" value={item.id} onClick={this.delMeetingRoom}>Delete</Button>
                 <ListSmsFrom data={item}/>
                 <ListRoomDetail data={item}/>
-                <Button size="sm" href={item._links.guest_url.href} target="_blank" rel="noreferrer" >Join</Button>
+                <Button size="sm" 
+                  href={item._links.host_url.href} target="_blank" rel="noreferrer" >Join as Host</Button>
+                {" "}
+                <Button  variant="outline-secondary" size="sm" 
+                  href={item._links.guest_url.href} target="_blank" rel="noreferrer">Join as Guest</Button>
               </ListGroup.Item>
             )
           })
@@ -118,4 +142,25 @@ const API_URL = process.env.REACT_APP_API_URL;
   }
  }
 
- export default MeetingsList;
+const Example = forwardRef((props, ref) => {
+  const [showB, setShowB] = useState(true);
+  const toggleShowB = () => setShowB(!showB);
+  return (<>
+    <Toast onClose={setShowB(!showB)} show={showB} animation={false}>
+      <Toast.Header>
+        <span className="me-auto">{props.data.x}</span>
+      </Toast.Header>
+      <Toast.Body>
+        <ListGroup>
+          <ListGroup.Item>Dial-in:</ListGroup.Item>
+          <ListGroup.Item>Meeting ID: </ListGroup.Item>
+          <ListGroup.Item>Click to dial: {props.data.x}</ListGroup.Item>
+          <ListGroup.Item>Link: {props.data.x}</ListGroup.Item>
+        </ListGroup>
+        </Toast.Body>
+    </Toast>
+    </>
+  );
+})
+
+export default MeetingsList;

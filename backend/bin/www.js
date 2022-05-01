@@ -10,7 +10,7 @@ import http from 'http';
 
 dotenv.config();
 
-const debug = debugLib('your-project-name:server');
+const debug = debugLib((process.env['APP_NAME'] ? process.env['APP_NAME'] : 'Express') + ':server');
 
 /**
  * Get port from environment and store in Express.

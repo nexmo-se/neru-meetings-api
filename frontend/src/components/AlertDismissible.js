@@ -24,10 +24,15 @@ const AlertDismissible = forwardRef((props, ref) => {
   return (<>
     <Alert show={show} variant={variant} onClose={() => setShow(false)} dismissible>
       <Alert.Heading size="sm">{heading}</Alert.Heading>
-      <hr />{
-        Object.entries(msg).map((e, index) => (
-          <p className="text-break mx-0 my-0" key={index}> {(typeof e === 'string')? e : JSON.stringify(e)}</p>
-        ) )
+      <hr />
+      {
+        Object.entries(msg).map((e, index) => {
+          if (e[0] !== '_links') return (
+              <p className="text-break mx-0 my-0" key={index}> 
+                {(typeof e === 'string')? e : JSON.stringify(e)}
+              </p>
+          )
+        })
       }
     </Alert>
   </>);

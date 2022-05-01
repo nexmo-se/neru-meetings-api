@@ -23,8 +23,20 @@ function SmsFrom(props) {
       showSpinner(true);
       const formData = new FormData(e.target);
       const formDataJson = Object.fromEntries(formData.entries());
+      if (formDataJson.to.length == 0 ) {
+        showSpinner(false);
+        alertRef.current.hide()
+        alertRef.current.show({error: "Please set a valid To number"} , 'Error', 'secondary');
+        return;
+      };
+      if (formDataJson.text.length == 0 ) {
+        showSpinner(false);
+        alertRef.current.hide()
+        alertRef.current.show({error: "Please set text"} , 'Error', 'secondary');
+        return;
+      };
       // console.log("sendSms", formDataJson);
-      Http.post(API_URL + '/sendsms', formDataJson)
+      Http.post(API_URL + '/meetings/sendSms', formDataJson)
       .then(data => {
         showSpinner(false);
         console.log("sendSms", data);
@@ -35,7 +47,7 @@ function SmsFrom(props) {
       .catch( error => {
         showSpinner(false);
         alertRef.current.hide()
-        alertRef.current.show(error, 'Error', 'secondary');
+        alertRef.current.show({error: error.message}, 'Error', 'secondary');
         console.error(error);
       });
       // eof Http.post
@@ -45,17 +57,19 @@ function SmsFrom(props) {
       <h5>{props.title? props.title : "Invite people with an SMS"}</h5>
       <Form onSubmit={sendSms}>
         <Form.Group className="mb-3" as={Row}>
-          <Form.Label column sm={3}>Recipient phone number:</Form.Label>
+          <Form.Label column sm={3}>To:</Form.Label>
           <Col>
           <Form.Control as="input" name="to"
-            defaultValue={props.to? props.to : "8615814034648"}
+            placeholder={props.to !== undefined? props.to : "Recipient phone number"}
+            defaultValue={props.to !== undefined? props.to : ""
+          }
           /></Col>
         </Form.Group>
         <Form.Group className="mb-3" as={Row}>
           <Form.Label column sm={3}>Message: </Form.Label>
           <Col><Form.Control as="textarea" name="text" rows={3} 
-            value={props.text? props.text : "Hello from Vonage Meetings API"}
-            onChange={() => {}}
+            placeholder={props.text !== undefined? props.text : "Hello from Vonage Meetings API"}
+            defaultValue={props.text !== undefined? props.text : "Hello from Vonage Meetings API"}
           /></Col>
         </Form.Group>
         <Form.Group className="mb-3" as={Row}>

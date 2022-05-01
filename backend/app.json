@@ -1,0 +1,7 @@
+{
+    "name": "Demo APP with Meetings API",
+    "description": "A reference app using Meetings API",
+    "repository": "https://git.heroku.com/meetings-api-demo-js.git",
+    "logo": "https://meetings-api-demo-js.herokuapp.com/vonage.png",
+    "keywords": ["node", "vonage"]
+}

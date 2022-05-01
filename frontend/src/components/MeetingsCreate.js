@@ -8,7 +8,6 @@ import {
   Spinner
 } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
-
 import Http  from './Http';
 import SmsFrom from './SmsFrom';
 import AlertDismissible from './AlertDismissible';
@@ -49,9 +48,10 @@ class MeetingsCreate extends React.Component {
     formDataJson.expires_at = this.datePickerRef.current.getISOString();
     // ---
     console.log(formDataJson);
-    Http.post(API_URL + '/meetingsRoom', formDataJson)
+    Http.post(API_URL + '/meetings/rooms', formDataJson)
       .then(data => {
         if (typeof data === "string") throw new Error(data);
+        console.log('createRoom', data)
         this.alertRef.current.show(data, "API Response", "info");
         data.host_url = data._links.host_url.href;
         data.guest_url = data._links.guest_url.href;
