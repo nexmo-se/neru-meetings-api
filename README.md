@@ -1,8 +1,10 @@
-## Neru App for Meetings API setup
+# Neru App for Meetings API setup
 
-A Simple Demo of using the Vonage Meetings API( [Overview](https://developer.vonage.com/meetings/overview), [API Reference](https://developer.vonage.com/meetings/api-reference) ). 
+A Simple Demo of using the Vonage Meetings API
+- [Vonage Meetings API Overview](https://developer.vonage.com/meetings/overview).
+- [Vonage Meetings API API Reference](https://developer.vonage.com/meetings/api-reference). 
 
-You can deploy it in [NeRu](https://vonage-neru.herokuapp.com/neru/overview) or other cloud providers.
+You can deploy it in [NeRu](https://vonage-neru.herokuapp.com/neru/overview)
 
 Features:
 - Create/Delete/Fetch-info-of a Meetings Room
@@ -11,46 +13,49 @@ Features:
 - Handle Callbacks sent from Vonage API (when deployed in NeRu) 
 
 [Here](https://api-us.vonage.com/v1/neru/i/neru-b617e2b2-neru-test-app-dev/public/create) is a demo that is hosted in NeRu.
-
 ![create a meeting room](screenshots/Screenshot-create-a-meeting-room.png?raw=true "create a meeting room")
 
-### Installation
-This app requires node.js and react.
-#### Install dependencies
-- Backend, when deployed in NeRu, 
-   - follow through all steps in [this NeRU toturial](https://vonage-neru.herokuapp.com/neru/tutorials/neru-get-started), and install all mentioned prerequisites
-- Backend, when not deployed in NeRu, 
-    - run `cd ./backend && npm install`
-- Frontend, run `cd ./frontend && npm install`
 
-#### Configuration
- - rename `./backend/neru.yml.sample` as `./backend/neru.yml`
- - rename `./frontend/.env.sample` as `./frontend/.env`
- - adjust their conent accordingly, and remove all those comments;
-
-#### Start the server
-When in localhost
-```sh
-cd ./backend && npm start 
-cd ./frontend && npm start
+## Installation
+First clone this git repo 
 ```
-For production environments...
-- NeRu
-```sh
-cd ./frontend && npm run build
-cp -r ./frontend/build/* ./backend/public
+git clone git@github.com:nexmo-se/neru-meetings-api.git
+```
+
+#### Frontend pages 
+Configure .env, install dependencies
+```
+cd frontend && cp sample.env .env
+# update .env
+npm install
+```
+
+#### Deploly to NeRu
+[Read more about NeRU](https://vonage-neru.herokuapp.com/neru/tutorials/neru-get-started)
+- Configure NeRu
+```
+cd neru && neru configure
+```
+- Install dependencies, build frontend files, and deploy to NeRu
+```
+npm install
+npm run build
+
+# neru
 neru deploy
 ```
-- For others:
-```sh
-cd ./frontend && npm run build
-cp -f ./frontend/build/* ./backend/public
-```
 
-### Development or Debug without NeRu
-You need to replace the `scripts` block in `package.json` with the the following:
+
+#### Start a Local Server
+Configure .env
 ```
-"scripts": {
-        "start": "nodemon ./bin/www.js"
-      }
+cd backend-express && cp sample.env .env
+
+# update .env
+```
+- Install dependencies, build frontend files, and start the server
+```
+npm install
+npm run build
+npm start
 ```
