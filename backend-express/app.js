@@ -8,6 +8,9 @@ import { fileURLToPath } from 'url';
 
 import { router as meetingsRouter } from './routes/index.js';
 
+import { meetings } from './modules/meetings.js';
+import { message }  from './modules/message.js';
+
 var __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 var app = express();
@@ -30,6 +33,10 @@ app.get('/public/*', function(req, res, next) {
 /**
  * APIs
  */
+app.use('/onMeetings', meetings.onCallback);
+
+app.all('/onMessageEvent', message.onMessageEvent);
+
 app.use('/meetings', meetingsRouter);
 
 export default app;

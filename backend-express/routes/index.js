@@ -30,7 +30,7 @@ router.post('/onCallback', meetings.onCallback);
 router.post('/sendSms', message.sendSms); 
 
 router.get('/messageEvents', message.findAllMessageEvents); 
-router.post('/onMessageEvent', message.onMessageEvent); 
+router.all('/onMessageEvent', message.onMessageEvent); 
 
 router.get('/ni/:number', message.ni);
 

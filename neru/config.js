@@ -14,4 +14,5 @@ var state     = session.getState();
 var messageProvider = new Messages(session);
 
 import { meetingsApi as meetingsProvider } from './modules/meetingsApi.js';
+
 export { session, state, messageProvider, meetingsProvider }

@@ -3,6 +3,9 @@ import express from 'express';
 import { meetings } from '../modules/meetings.js';
 import { message }  from '../modules/message.js';
 
+import { state } from '../config.js';
+import { session } from '../config.js';
+
 var router = express.Router();
 
 // https://localhost/meetings
@@ -30,7 +33,7 @@ router.post('/onCallback', meetings.onCallback);
 router.post('/sendSms', message.sendSms); 
 
 router.get('/messageEvents', message.findAllMessageEvents); 
-router.post('/onMessageEvent', message.onMessageEvent); 
+router.all('/onMessageEvent', message.onMessageEvent); 
 
 router.get('/ni/:number', message.ni);
 

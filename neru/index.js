@@ -5,6 +5,9 @@ import { fileURLToPath } from 'url';
 
 import { router as meetingsRouter } from './routes/index.js';
 
+import { meetings } from './modules/meetings.js';
+import { message }  from './modules/message.js';
+
 var __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const router = neru.Router();
@@ -17,9 +20,15 @@ router.use('/public/manifest.json', st(path.join(__dirname, './public/manifest.j
 router.get('/public/*', function(req, res, next) {
     res.sendFile('index.html', {root: path.join(__dirname, './public')});
 });
+
 /**
  * APIs
  */
+
+router.use('/onMeetings', meetings.onCallback);
+
+router.all('/onMessageEvent', message.onMessageEvent); 
+
 router.use('/meetings', meetingsRouter);
 
 export { router };

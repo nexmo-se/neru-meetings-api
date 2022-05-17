@@ -37,7 +37,7 @@ class Message {
             var data2 = await state.lrange("meetings_api_events", 0);
             if (!data2) data2 = [];
 
-            var data = data2.concat(data1);
+            var data = [].concat(data2, data1);
             return res.json(data);
         } catch (error) {
             next(error);
