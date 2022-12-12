@@ -26,7 +26,9 @@ git clone git@github.com:nexmo-se/neru-meetings-api.git
 Configure .env, install dependencies
 ```
 cd frontend && cp sample.env .env
+
 # update .env
+
 npm install
 ```
 
@@ -43,19 +45,4 @@ npm run build
 
 # neru
 neru deploy
-```
-
-
-#### Start a Local Server
-Configure .env
-```
-cd backend-express && cp sample.env .env
-
-# update .env
-```
-- Install dependencies, build frontend files, and start the server
-```
-npm install
-npm run build
-npm start
 ```

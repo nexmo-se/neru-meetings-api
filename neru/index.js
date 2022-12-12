@@ -1,25 +1,35 @@
-import { neru } from 'neru-alpha';
-import path from 'path';
-import st from 'serve-static';
-import { fileURLToPath } from 'url';
+import express from 'express';
+import logger from 'morgan';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
-import { router as meetingsRouter } from './routes/index.js';
+const app = express();
+const port = process.env.NERU_APP_PORT || 3002;
 
-var __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-const router = neru.Router();
-
-/**
- * Frontend resources
- */
-router.use('/public/static/', st(path.join(__dirname, './public/static/')));
-router.use('/public/manifest.json', st(path.join(__dirname, './public/manifest.json')));
-router.get('/public/*', function(req, res, next) {
-    res.sendFile('index.html', {root: path.join(__dirname, './public')});
+app.use(cors());
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(express.static('public'));
+app.get('/public/*', function(req, res, next) {
+  res.sendFile('index.html', {root: 'public'});
 });
-/**
- * APIs
- */
-router.use('/meetings', meetingsRouter);
 
-export { router };
+import indexRouter from './routes/index.js';
+import { meetings } from './models/index.js';
+
+app.get('/_/health', async (req, res) => {
+    res.sendStatus(200);
+});
+
+app.use('/onMeetings', meetings.onCallback);
+app.use("/meetings", indexRouter);
+
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+});
+
+process.on("uncaughtException", (err) => {
+  console.log("[uncaughtException] - general catch", err);
+});

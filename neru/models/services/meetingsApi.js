@@ -1,22 +1,12 @@
 import { HttpRequest, generateJwt } from './httpRequest.js';
-import { locadConfig } from '../config.js';
 
-var APP_CONFIGURATIONS = locadConfig();
-
-var application_id = APP_CONFIGURATIONS.meetings_api.api_application_id;
-var private_key    = APP_CONFIGURATIONS.meetings_api.api_private_key 
-
-class MeetingsApi {
-    constructor(application_id, private_key) {
-        this.application_id = application_id
-        this.private_key = private_key
-    }
+export default class MeetingsApi {
     getJwt() {
         const jwtToken = generateJwt(
             { 
-                application_id: this.application_id
+                application_id: process.env.API_APPLICATION_ID
             }, 
-            this.private_key
+            Buffer.from(process.env.PRIVATE_KEY, "utf-8")
         );
         return jwtToken;
     }
@@ -81,8 +71,3 @@ class MeetingsApi {
         return new HttpRequest(url, 'DELETE', null, headers);
     }
 }
-
-var meetingsApi = new MeetingsApi(application_id, private_key);
-
-export { meetingsApi };
-

@@ -12,7 +12,7 @@ import {
 import Http  from './Http';
 import AlertDismissible from './AlertDismissible';
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_SERVER_URL;
 
 function SmsFrom(props) {
     const alertRef = useRef();

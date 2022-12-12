@@ -10,7 +10,8 @@ import {
     Toast
   } from 'react-bootstrap';
 import Http  from './Http';
-const API_URL = process.env.REACT_APP_API_URL;
+
+const API_URL = process.env.REACT_APP_SERVER_URL;
 
 function ToggleDialInNumbers (props) {
     const [show, setShow] = useState(false);

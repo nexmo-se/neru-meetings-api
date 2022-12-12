@@ -16,7 +16,7 @@ import MeetingsCallbacks from './components/MeetingsCallbacks';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const PUBLIC_URL = process.env.PUBLIC_URL;
+const PUBLIC_URL = `${process.env.PUBLIC_URL}/public`;
 
 class App extends React.Component {
   render() {

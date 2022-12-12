@@ -14,7 +14,7 @@ import AlertDismissible from './AlertDismissible';
 
 import "react-datepicker/dist/react-datepicker.css";
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_SERVER_URL;
 
 /**
  * Meetings - Create a Room

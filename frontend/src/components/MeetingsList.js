@@ -12,7 +12,7 @@ import SmsFrom from './SmsFrom';
 import AlertDismissible from './AlertDismissible';
 import ToggleDialInNumbers from './ToggleDialInNumbers';
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_SERVER_URL;
 
 /**
  * Meetings - Get all available rooms

@@ -46,8 +46,8 @@ var HttpRequest = (function () {
             }
             return res.body;
         } catch (error) {
-            console.error(error.code, error.stack);
-            throw new Error('Something went wrong!! ' + this.url + (error.code || ""));
+            console.error(error);
+            throw new Error('Something went wrong!! ' + this.url + ' ' +  (error.code || ""));
         }
     };
     return HttpRequest;

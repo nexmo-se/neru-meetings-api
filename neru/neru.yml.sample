@@ -1,22 +1,21 @@
 project:
-    name: 
+    name: neru-test-app
 instance:
-    name: 
-    runtime: 
-    region: 
+    name: dev
+    runtime: nodejs16
+    region: aws.use1
     application-id: 
+    secrets:
+        - API_SECRET
+    capabilities:
+        - messaging
     configurations:
-        contact:
-            number: ""
-            type: "phone"
-        meetings_api:
-            api_application_id: ""
-            api_private_key: "./private.key"
-            url_sms_callback: ""
-        api_account:
-            key: ""
-            secret: ""
-        section1:
-            key1: this is an example
-        section2:
-            key2: 42
+        vonage_number: 
+    entrypoint:
+        - npm
+        - start
+debug:
+    name: training
+    entrypoint:
+        - npm
+        - start
